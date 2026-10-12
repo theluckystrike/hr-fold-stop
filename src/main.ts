@@ -36,8 +36,12 @@ export default class HrFoldStopPlugin extends Plugin {
 		// Registered cleanup runs before the editor extension is removed.
 		this.register(() => this.reconfigure());
 
+		// Each check and each failed retry calls the listener, also with no change. Expand folds only when Pro changes.
+		let wasPro = isPro();
 		this.removeProListener = onProChange(() => {
-			this.reconfigure();
+			const nowPro = isPro();
+			if (nowPro !== wasPro) this.reconfigure();
+			wasPro = nowPro;
 			this.settingTab?.update();
 		});
 
@@ -45,9 +49,13 @@ export default class HrFoldStopPlugin extends Plugin {
 			id: 'restore-normal-folding',
 			name: 'Restore normal folding in this note',
 			editorCallback: (editor, info) => {
-				if (info.file) this.restoredNotes.add(info.file.path);
 				editor.exec('unfoldAll');
-				this.reconfigure();
+				if (info.file) {
+					const path = info.file.path;
+					this.restoredNotes.add(path);
+					// Other panes of this note only. Folds in other notes stay.
+					for (const view of this.editorViews) if (notePathOf(view.state) === path) expandFolds(view);
+				}
 				new Notice('Normal folding for this note until settings change or the plugin reloads.');
 			},
 		});
@@ -59,6 +67,10 @@ export default class HrFoldStopPlugin extends Plugin {
 			}
 			this.noteOverrides.set(file.path, value);
 			this.settingTab?.refreshEffectiveRule();
+		}));
+		this.registerEvent(this.app.vault.on('rename', (file, oldPath) => {
+			if (this.restoredNotes.delete(oldPath)) this.restoredNotes.add(file.path);
+			this.noteOverrides.delete(oldPath);
 		}));
 		this.registerEvent(this.app.workspace.on('file-open', () => this.settingTab?.refreshEffectiveRule()));
 

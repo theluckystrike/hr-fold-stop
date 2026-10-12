@@ -1,6 +1,6 @@
 {
 	"name": "hr-fold-stop",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": true,
 	"description": "Stop heading folds at horizontal rules so the next section stays visible.",
 	"main": "main.js",
