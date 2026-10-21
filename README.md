@@ -121,3 +121,7 @@ Report a bug or ask for a feature in the issue tracker of this repository. To su
 ## License
 
 MIT. The bundled Lezer Markdown parser also uses MIT; see THIRD_PARTY_NOTICES.md.
+
+## Community
+
+Questions, bugs or plugin ideas? Talk to me and other Obsidian users in [Zovo Chat](https://t.me/+k2MM-BIc7SQ5OWM0) on Telegram. It has a topic for these plugins. You can also open an issue here.
