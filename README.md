@@ -67,6 +67,8 @@ To go back to normal folding in one note, run `Restore normal folding in this no
 
 ## Settings
 
+After a minor or major update, this plugin opens one What's new tab in the background. The tab and settings card suggest other NoteMods plugins and Zovo Chat and link to notemods.com for feedback ([privacy](https://notemods.com/privacy/)). The tab sends no data. Turn the tab off in Settings.
+
 | Setting | Default | What it does |
 | --- | --- | --- |
 | Stop folds at horizontal rules | On | The default rule before Pro overrides. |
