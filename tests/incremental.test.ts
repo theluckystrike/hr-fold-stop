@@ -13,7 +13,7 @@ vi.mock('obsidian', async () => {
  return { ...original, editorInfoField: StateField.define({ create: () => ({ file: { path: 'A.md' } }), update: value => value }) };
 });
 
-const CONFIG: FoldStopConfig = { enabled: true, rule: { vaultEnabled: true, folders: [], overrideProperty: '' } };
+const CONFIG: FoldStopConfig = { enabled: true, endMarkers: true, rule: { vaultEnabled: true, folders: [], overrideProperty: '' } };
 const BIG = Array.from({ length: 20000 }, (_, i) => i % 50 === 0 ? `## H${i}` : i % 97 === 0 ? '---' : `Line ${i} with **text**`).join('\n');
 
 describe('incremental parse', () => {

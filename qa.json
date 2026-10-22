@@ -3,28 +3,35 @@
     "feature": "fold-stop",
     "caption": "The heading folds before the rule. The next section stays visible.",
     "note": "Project Atlas.md",
-    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
+    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
     "wait": 700
   },
   {
     "feature": "fold-child",
     "caption": "The child heading folds with its parent. The asterisk rule remains visible.",
     "note": "Week 42.md",
-    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
+    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
     "wait": 700
   },
   {
     "feature": "fold-code",
     "caption": "The code fence folds with the heading. The top-level rule stays visible.",
     "note": "Journal.md",
-    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
+    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
+    "wait": 700
+  },
+  {
+    "feature": "fold-marker",
+    "caption": "The heading folds before the %% fold-stop %% line. The text after the marker stays visible.",
+    "note": "Release plan.md",
+    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:true}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:2,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
     "wait": 700
   },
   {
     "feature": "settings",
     "caption": "The free vault toggle and the locked Pro controls.",
     "note": "Project Atlas.md",
-    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();p.settingTab.update();app.setting.open(); app.setting.openTabById('hr-fold-stop'); await new Promise(r => setTimeout(r, 500)); const pane = document.querySelector('.vertical-tab-content'); if (pane) pane.scrollTop = pane.scrollHeight; return 'ok'; })()",
+    "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();p.settingTab.update();app.setting.open(); app.setting.openTabById('hr-fold-stop'); await new Promise(r => setTimeout(r, 500)); const pane = document.querySelector('.vertical-tab-content'); if (pane) pane.scrollTop = pane.scrollHeight; return 'ok'; })()",
     "after": "app.setting.close(); 'ok'"
   },
   {
@@ -47,7 +54,7 @@
     "frames": [
       {
         "note": "Project Atlas.md",
-        "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll'); return 'ok'; })()",
+        "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll'); return 'ok'; })()",
         "hold": 1500
       },
       {
@@ -60,7 +67,7 @@
       },
       {
         "note": "Week 42.md",
-        "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
+        "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();const leaf = app.workspace.getMostRecentLeaf(); const path = app.workspace.getActiveFile().path; await leaf.setViewState({type:'markdown',state:{file:path,mode:'source',source:false}}); await new Promise(r => setTimeout(r, 500)); const ed = app.workspace.activeEditor.editor; ed.exec('unfoldAll');ed.setCursor({line:0,ch:0}); ed.exec('toggleFold'); return 'ok'; })()",
         "hold": 1800
       }
     ]

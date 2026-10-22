@@ -21,6 +21,21 @@ describe('HrFoldStopPlugin', () => {
 		expect(normalizeSettings({ enabled: 5 as never })).toEqual(DEFAULT_SETTINGS);
 		expect(normalizeSettings(null)).toEqual(DEFAULT_SETTINGS);
 	});
+
+	it('turns end markers on by default and keeps a saved off value', () => {
+		expect(DEFAULT_SETTINGS.endMarkers).toBe(true);
+		expect(normalizeSettings({ enabled: true }).endMarkers).toBe(true);
+		expect(normalizeSettings({ endMarkers: false }).endMarkers).toBe(false);
+		expect(normalizeSettings({ endMarkers: 'no' as never }).endMarkers).toBe(true);
+	});
+
+	it('passes the end marker setting to the editor', () => {
+		const app = App.createConfigured__({ files: { 'A.md': '# A' } });
+		const plugin = new HrFoldStopPlugin(app as never, manifest as never);
+		expect(plugin.editorConfig('A.md').endMarkers).toBe(true);
+		plugin.settings.endMarkers = false;
+		expect(plugin.editorConfig('A.md').endMarkers).toBe(false);
+	});
 });
 
 it('saved paid rules do not affect the free feature without a sponsor', () => {
@@ -44,6 +59,8 @@ it('free controls and paid controls are present in the settings definitions', ()
  const tab = new HrFoldStopSettingTab(app as never, plugin);
  const names = tab.getSettingDefinitions().map(item => 'name' in item ? item.name : '');
  expect(names).toContain('Stop folds at horizontal rules');
+ expect(names).toContain('Stop folds at end markers');
+ expect(names.indexOf('Stop folds at end markers')).toBe(names.indexOf('Stop folds at horizontal rules') + 1);
  expect(names).toContain('Folder rules (Pro)');
  expect(names).toContain('Override property (Pro)');
 });

@@ -97,6 +97,7 @@ export default class HrFoldStopPlugin extends Plugin {
 		if (!this.noteOverrides.has(path)) this.noteOverrides.set(path, noteOverride);
 		return {
 			enabled: !this.restoredNotes.has(path),
+			endMarkers: this.settings.endMarkers,
 			rule: effectiveRuleOf(this.settings),
 			noteOverride,
 		};

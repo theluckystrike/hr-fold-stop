@@ -1,16 +1,10 @@
 {
 	"id": "hr-fold-stop",
 	"name": "Fold Stop",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"changes": [
-		"New Send feedback command. It opens a page where you can report a problem or suggest an idea.",
-		"Makes the restore command expand only its own note.",
-		"Keeps the restore choice when a note is renamed."
-	],
-	"changes_user": [
-		"New Send feedback command. It opens a page where you can report a problem or suggest an idea.",
-		"Restore normal folding in this note now unfolds only that note. Folds in your other notes stay.",
-		"The restore choice stays with a note when you rename it."
+		"Add the line %% fold-stop %% under a section to end its heading fold without a divider line. The text after it stays visible.",
+		"Use %% fold-stop 4 %% to end only the folds of level 4 headings and deeper. Turn markers off in Settings."
 	],
 	"tip": "Run Restore normal folding in this note to unfold the active note and use normal folding again.",
 	"thanks": "Hi, I am Michael, a solo developer in Poland. Fold Stop is one of over 100 small plugins that I make. Thank you for keeping it in your editor.",

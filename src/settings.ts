@@ -9,6 +9,8 @@ import { helloSettingItems } from './hello/settings';
 export interface HrFoldStopSettings {
 	/** Fold Stop on for the whole vault. Free. */
 	enabled: boolean;
+	/** Stop folds at `%% fold-stop %%` end markers. Free. */
+	endMarkers: boolean;
 	/** Pro: folder rules, longest matching path wins. */
 	folders: FolderRuleEntry[];
 	/** Pro: note property name that overrides a folder rule. Empty = no note override. */
@@ -17,6 +19,7 @@ export interface HrFoldStopSettings {
 
 export const DEFAULT_SETTINGS: HrFoldStopSettings = {
 	enabled: true,
+	endMarkers: true,
 	folders: [],
 	overrideProperty: 'fold-stop',
 };
@@ -26,6 +29,7 @@ export function normalizeSettings(saved: Partial<HrFoldStopSettings> | null | un
 	const s = saved ?? {};
 	return {
 		enabled: typeof s.enabled === 'boolean' ? s.enabled : DEFAULT_SETTINGS.enabled,
+		endMarkers: typeof s.endMarkers === 'boolean' ? s.endMarkers : DEFAULT_SETTINGS.endMarkers,
 		folders: normalizeFolders(s.folders),
 		overrideProperty: typeof s.overrideProperty === 'string' ? s.overrideProperty.trim() : DEFAULT_SETTINGS.overrideProperty,
 	};
@@ -68,6 +72,11 @@ export class HrFoldStopSettingTab extends PluginSettingTab {
 				name: 'Stop folds at horizontal rules',
 				desc: 'Stop heading folds before the first top-level horizontal rule, so the next section stays visible.',
 				control: { type: 'toggle', key: 'enabled', defaultValue: DEFAULT_SETTINGS.enabled },
+			},
+			{
+				name: 'Stop folds at end markers',
+				desc: 'Stop heading folds before a %% fold-stop %% line. Add a digit, as in %% fold-stop 4 %%, to stop only headings of that level and deeper.',
+				control: { type: 'toggle', key: 'endMarkers', defaultValue: DEFAULT_SETTINGS.endMarkers },
 			},
 			{
 				name: 'Folder rules (Pro)',

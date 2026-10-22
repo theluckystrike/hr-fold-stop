@@ -13,7 +13,7 @@ vi.mock('obsidian', async () => {
 });
 
 const DOC = '# A\nBody\n\n---\nTail\n# B\nEnd';
-const CONFIG: FoldStopConfig = { enabled: true, rule: { vaultEnabled: true, folders: [], overrideProperty: '' } };
+const CONFIG: FoldStopConfig = { enabled: true, endMarkers: true, rule: { vaultEnabled: true, folders: [], overrideProperty: '' } };
 function create(getConfig: (path: string) => FoldStopConfig = () => CONFIG) {
  return EditorState.create({ doc: DOC, extensions: [editorInfoField, codeFolding(), foldStopExtension(getConfig)] });
 }

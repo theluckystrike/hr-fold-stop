@@ -1,5 +1,11 @@
 # hr-fold-stop
 
+## 1.2.0
+
+### Minor Changes
+
+- Add end markers: a `%% fold-stop %%` comment line ends a heading fold without a divider line, and `%% fold-stop 4 %%` ends only the folds of level 4 headings and deeper.
+
 ## 1.1.0
 
 ### Minor Changes

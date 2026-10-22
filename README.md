@@ -31,6 +31,12 @@ A Setext heading underline is part of that heading, not a rule. A later top-leve
 
 <img src="https://raw.githubusercontent.com/theluckystrike/hr-fold-stop/HEAD/docs/fold-code.png" width="720" alt="A note with a code fence and a rule. The fold stops at the real rule only.">
 
+### End markers
+
+To end a section without a divider line, add the comment line `%% fold-stop %%`. The heading fold stops before it, and the text after it stays visible. `%% fold-stop 4 %%` ends only the folds of level 4 headings and deeper, so a parent H3 folds past it. A marker counts only on its own top-level line, not in code, lists, quotes or an open comment.
+
+<img src="https://raw.githubusercontent.com/theluckystrike/hr-fold-stop/HEAD/docs/fold-marker.png" width="720" alt="A folded heading, the fold-stop marker line and the visible text after it.">
+
 ### Vault toggle and restore command
 
 A single setting sets the default folding rule for the vault. Pro folder rules and note properties can override this default. With that default off and no Pro override, Obsidian uses normal folding. Changes to rules expand stored folds so the next fold uses the new rule. The command `Restore normal folding in this note` unfolds the active note and lets Obsidian fold it the normal way from then on. This choice lasts until settings change or the plugin reloads. The command changes no note text.
@@ -72,6 +78,7 @@ After a minor or major update, this plugin opens one What's new tab in the backg
 | Setting | Default | What it does |
 | --- | --- | --- |
 | Stop folds at horizontal rules | On | The default rule before Pro overrides. |
+| Stop folds at end markers | On | Folds stop before a `%% fold-stop %%` line. |
 | Folder rules (Pro) | Empty | Folder paths with Fold Stop on or off. The longest matching path decides. |
 | Override property (Pro) | `fold-stop` | A Boolean note property that overrides the folder rule. |
 | Effective rule panel (Pro) | Shown | Shows the rule that the active note uses and its source. |

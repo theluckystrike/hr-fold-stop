@@ -8,6 +8,8 @@ import { effectiveRuleForPath, type EffectiveRule } from './rules';
 
 export interface FoldStopConfig {
 	enabled: boolean;
+	/** Stop folds at `%% fold-stop %%` end markers. */
+	endMarkers: boolean;
 	rule: EffectiveRule;
 	noteOverride?: boolean;
 }
@@ -46,7 +48,7 @@ export function foldStopExtension(getConfig: (path: string) => FoldStopConfig, v
 		const headingIndex = state.doc.lineAt(lineStart).number - 1;
 		const heading = scan[headingIndex]!;
 		if (heading.kind !== 'heading') return null;
-		const stop = foldStopLine(scan, headingIndex, heading.level);
+		const stop = foldStopLine(scan, headingIndex, heading.level, config.endMarkers);
 		if (stop === null) return null;
 		// Start on the heading line, so native controls find and unfold the range.
 		// Keep the newline before the boundary outside the range.
@@ -57,7 +59,7 @@ export function foldStopExtension(getConfig: (path: string) => FoldStopConfig, v
 		views?.add(view);
 		return { destroy: () => { views?.delete(view); } };
 	});
-	// Stock folding can propose a range when the rule is directly under the heading.
+	// Stock folding can propose a range when the rule or end marker is directly under the heading.
 	// Clip such effects through the public API; keep the note changes and selection.
 	const clamp = EditorState.transactionFilter.of(tr => {
 		// Most transactions are typing or selection. Return them before any rule or parse work.
@@ -72,7 +74,7 @@ export function foldStopExtension(getConfig: (path: string) => FoldStopConfig, v
 			const line = tr.newDoc.lineAt(effect.value.from);
 			const heading = scan[line.number - 1]!;
 			if (heading.kind !== 'heading') return [effect];
-			const stop = foldStopLine(scan, heading.i, heading.level);
+			const stop = foldStopLine(scan, heading.i, heading.level, config.endMarkers);
 			if (stop === null) return [effect];
 			const to = tr.newDoc.line(stop + 1).from - 1;
 			if (effect.value.to <= to) return [effect];

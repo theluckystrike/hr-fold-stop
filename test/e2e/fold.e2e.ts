@@ -17,7 +17,7 @@ async function configure(saved: Partial<HrFoldStopSettings> = {}, paid = false):
  await browser.executeObsidian(async ({ app }, id, settings, pro) => {
   const p = (app as unknown as { plugins: { plugins: Record<string, TestPlugin> } }).plugins.plugins[id]!;
   p.pro.signOut();
-  p.settings = { enabled: true, folders: [], overrideProperty: 'fold-stop', ...settings };
+  p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop', ...settings };
   await p.saveSettings();
   if (pro) {
    p.pro.opts.http = () => Promise.resolve({ status: 200, json: { data: { viewer: { login: 'demo-reader' }, user: { sponsorshipForViewerAsSponsor: { isActive: true, isOneTimePayment: false, tier: { name: '$5 a month', monthlyPriceInCents: 500 } } } } } });
@@ -155,5 +155,58 @@ describe(`${pluginId} native folding`, function () {
   expect(stock.hidden[0]).toContain('Tail line');
   expect(stock.doc).toBe(TEXT);
   expect((await snapshot())?.doc).toBe(TEXT);
+ });
+});
+
+const MARKER = '# Head\nBody line\n\n%% fold-stop %%\nTail line\n# End\nEnd body\n';
+
+describe(`${pluginId} end markers`, function () {
+ beforeEach(async () => configure());
+ after(async () => configure());
+ for (const source of [true, false]) {
+  it(`stops before an end marker in ${source ? 'Source' : 'Live Preview'} mode and keeps the saved text`, async () => {
+   const path = `Marker ${source ? 'Source' : 'Live Preview'}.md`;
+   await expectCustom(MARKER, 0, source, path);
+   const state = (await snapshot())!;
+   expect(state.hidden).toEqual(['\nBody line\n']);
+   if (source) expect(state.visible).toContain('%% fold-stop %%');
+   expect(await browser.executeObsidian(({ app }, file) => app.vault.adapter.read(file), path)).toBe(MARKER);
+  });
+ }
+ it('ends a child fold at a level 4 marker and the parent fold at the rule', async () => {
+  const text = '### B\nbody\n#### C\nchild body\n\n%% fold-stop 4 %%\nmore H3 text\n\n---\nTail\n';
+  await open(text); await fold(2);
+  const child = await waitFold();
+  expect(child.hidden).toEqual(['\nchild body\n']);
+  expect(child.visible).toContain('more H3 text');
+  await browser.executeObsidian(({ app }) => app.workspace.activeEditor!.editor!.exec('unfoldAll'));
+  await fold(0);
+  const parent = await waitFold();
+  expect(parent.hidden).toHaveLength(1);
+  expect(parent.hidden[0]).toContain('fold-stop 4');
+  expect(parent.hidden[0]).toContain('more H3 text');
+  expect(parent.hidden[0]).not.toContain('---');
+  expect(parent.visible).toContain('Tail');
+  expect(parent.doc).toBe(text);
+ });
+ it('expands stored folds when end markers turn off and then folds past the marker', async () => {
+  await expectCustom(MARKER);
+  await configure({ endMarkers: false });
+  expect((await snapshot())?.hidden).toEqual([]);
+  await fold();
+  const state = await waitFold();
+  expect(state.hidden[0]).toContain('%% fold-stop %%');
+  expect(state.hidden[0]).toContain('Tail line');
+  expect(state.doc).toBe(MARKER);
+ });
+ it('restores normal folding in a note with a marker', async () => {
+  await expectCustom(MARKER);
+  await browser.executeObsidianCommand(`${pluginId}:restore-normal-folding`);
+  expect((await snapshot())?.hidden).toEqual([]);
+  await fold();
+  const state = await waitFold();
+  expect(state.hidden[0]).toContain('%% fold-stop %%');
+  expect(state.hidden[0]).toContain('Tail line');
+  expect(state.doc).toBe(MARKER);
  });
 });
