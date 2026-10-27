@@ -1,7 +1,6 @@
 {
 	"name": "hr-fold-stop",
-	"repository": {"type": "git", "url": "theluckystrike/hr-fold-stop.git"},
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"private": true,
 	"description": "Stop heading folds at horizontal rules so the next section stays visible.",
 	"main": "main.js",

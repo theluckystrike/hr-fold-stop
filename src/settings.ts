@@ -1,7 +1,7 @@
 // Settings for Fold Stop. The vault toggle is free. Folder rules and the note override are Pro.
 import { PluginSettingTab, type Setting, type SettingDefinitionItem } from 'obsidian';
 import { sponsorsSettingItems } from './license/github-obsidian';
-import { PRO_UI, isPro } from './pro';
+import { PRO_FOLDERS, PRO_OVERRIDE, PRO_UI, isPro, proNotice } from './pro';
 import { effectiveRuleForPath, normalizeFolders, type EffectiveRule, type FolderRuleEntry } from './rules';
 import type HrFoldStopPlugin from './main';
 import { helloSettingItems } from './hello/settings';
@@ -82,8 +82,9 @@ export class HrFoldStopSettingTab extends PluginSettingTab {
 				name: 'Folder rules (Pro)',
 				desc: 'Use a vault folder path. The longest matching path wins. Paths are case sensitive.',
 				render: setting => {
-					setting.addButton(button => button.setButtonText('Add folder').setDisabled(!isPro()).onClick(async () => {
-						if (!isPro()) return;
+					// Free users can select the Pro controls: they show what Pro adds and how to get it, and change no setting.
+					setting.addButton(button => button.setButtonText('Add folder').onClick(async () => {
+						if (!isPro()) { proNotice(PRO_FOLDERS); return; }
 						this.plugin.settings.folders.push({ folder: '', enabled: true });
 						this.update();
 					}));
@@ -92,19 +93,19 @@ export class HrFoldStopSettingTab extends PluginSettingTab {
 			...this.plugin.settings.folders.map((rule, index): SettingDefinitionItem => ({
 				name: `Folder ${index + 1} (Pro)`,
 				render: setting => {
-					setting.addText(text => text.setPlaceholder('Folder path').setValue(rule.folder).setDisabled(!isPro()).onChange(async value => {
-						if (!isPro()) return;
+					setting.addText(text => text.setPlaceholder('Folder path').setValue(rule.folder).onChange(async value => {
+						if (!isPro()) { this.refuse(PRO_FOLDERS, text.inputEl); return; }
 						rule.folder = value.trim().replace(/\\/g, '/').replace(/\/+/g, '/').replace(/^\/|\/$/g, '');
 						await this.plugin.saveSettings();
 					}));
-					setting.addToggle(toggle => toggle.setValue(rule.enabled).setDisabled(!isPro()).onChange(async value => {
-						if (!isPro()) return;
+					setting.addToggle(toggle => toggle.setValue(rule.enabled).onChange(async value => {
+						if (!isPro()) { this.refuse(PRO_FOLDERS); return; }
 						rule.enabled = value;
 						await this.plugin.saveSettings();
 						this.update();
 					}));
-					setting.addButton(button => button.setButtonText('Remove').setDisabled(!isPro()).onClick(async () => {
-						if (!isPro()) return;
+					setting.addButton(button => button.setButtonText('Remove').onClick(async () => {
+						if (!isPro()) { proNotice(PRO_FOLDERS); return; }
 						this.plugin.settings.folders.splice(index, 1);
 						await this.plugin.saveSettings();
 						this.update();
@@ -114,8 +115,8 @@ export class HrFoldStopSettingTab extends PluginSettingTab {
 			{
 				name: 'Override property (Pro)',
 				desc: 'A Boolean note property takes priority over folder and vault rules. Text values do not apply.',
-				render: setting => { setting.addText(text => text.setValue(this.plugin.settings.overrideProperty).setDisabled(!isPro()).onChange(async value => {
-					if (!isPro()) return;
+				render: setting => { setting.addText(text => text.setValue(this.plugin.settings.overrideProperty).onChange(async value => {
+					if (!isPro()) { this.refuse(PRO_OVERRIDE, text.inputEl); return; }
 					this.plugin.settings.overrideProperty = value.trim();
 					await this.plugin.saveSettings();
 				})); },
@@ -131,6 +132,13 @@ export class HrFoldStopSettingTab extends PluginSettingTab {
 				},
 			},
 		];
+	}
+
+	/** A free user changed a Pro field: show the notice, save nothing, and draw the stored values again. A text field loses the focus, so one edit gives one notice. */
+	private refuse(lead: string, input?: HTMLInputElement): void {
+		input?.blur();
+		proNotice(lead);
+		this.update();
 	}
 
 	refreshEffectiveRule(): void {

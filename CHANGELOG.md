@@ -1,5 +1,11 @@
 # hr-fold-stop
 
+## 1.2.1
+
+### Patch Changes
+
+- 78ecea4: Add folder, the folder rule controls and the override property field are no longer grey for a free user. Each one shows how to get Pro, with a Sponsor on GitHub button, and changes no setting.
+
 ## 1.2.0
 
 ### Minor Changes

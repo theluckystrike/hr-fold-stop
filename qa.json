@@ -29,7 +29,7 @@
   },
   {
     "feature": "settings",
-    "caption": "The free vault toggle and the locked Pro controls.",
+    "caption": "The free vault toggles and the Pro controls. A free user who selects a Pro control gets the Pro notice.",
     "note": "Project Atlas.md",
     "eval": "(async () => { const p = app.plugins.plugins['hr-fold-stop']; p.pro.signOut(); p.settings = { enabled: true, endMarkers: true, folders: [], overrideProperty: 'fold-stop' }; await p.saveSettings();p.settingTab.update();app.setting.open(); app.setting.openTabById('hr-fold-stop'); await new Promise(r => setTimeout(r, 500)); const pane = document.querySelector('.vertical-tab-content'); if (pane) pane.scrollTop = pane.scrollHeight; return 'ok'; })()",
     "after": "app.setting.close(); 'ok'"
