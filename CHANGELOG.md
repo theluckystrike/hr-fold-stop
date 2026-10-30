@@ -1,5 +1,11 @@
 # hr-fold-stop
 
+## 1.2.2
+
+### Patch Changes
+
+- The Sponsor on GitHub button of Fold Stop now opens the one-time payment tab of GitHub Sponsors.
+
 ## 1.2.1
 
 ### Patch Changes
