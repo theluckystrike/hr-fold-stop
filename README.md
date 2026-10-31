@@ -4,6 +4,22 @@ Stop heading folds at horizontal rules so the next section stays visible.
 
 Fold Stop keeps the section after a divider visible when you fold its heading. It uses Obsidian's editor fold controls in Live Preview and Source mode. Folding changes the view, not the saved note text.
 
+## Quick start
+
+Paste this into a note:
+
+```markdown
+## Plan
+
+This line hides.
+
+---
+
+This line stays visible.
+```
+
+It uses Obsidian's editor fold controls in Live Preview and Source mode. Select the fold arrow next to the heading, or put the cursor in the heading and run `Toggle fold on the current line` from the command palette. The body of the heading hides. The rule and the text after it stay visible.
+
 ## Features
 
 ### Fold stops at the first top-level horizontal rule
@@ -115,7 +131,7 @@ Edits inside hidden text can expand a fold through the normal editor behavior. F
 
 The core features are free. Pro features need a GitHub Sponsors sponsorship of theluckystrike: $5 a month or more, or $15 once. A total payment of $15 meets the payment requirement for Pro without further payment. Sign-in and the checks below still apply. Your notes stay readable and editable with or without Pro.
 
-GitHub handles the payment. Sponsor at https://github.com/sponsors/theluckystrike. You need no account for the free features. Pro needs the GitHub account that sponsors.
+GitHub handles the payment. Sponsor at https://github.com/sponsors/theluckystrike?frequency=one-time&metadata_source=hr-fold-stop. You need no account for the free features. Pro needs the GitHub account that sponsors.
 
 Until you select "Sign in with GitHub" in the settings, Fold Stop makes no network requests. Sign in uses the GitHub device flow. Fold Stop sends its public client ID and the scope `read:user` to `https://github.com/login/device/code` and shows you a code. While you enter the code at https://github.com/login/device, it asks `https://github.com/login/oauth/access_token` every few seconds to check the sign-in status. The scope permits profile reads only. GitHub needs this access to show the sponsorship tier. It grants no repository scope and no write access.
 
@@ -125,7 +141,7 @@ After a successful check, Pro can work offline for up to 14 days. Sign out or a 
 
 ## Support
 
-Report a bug or ask for a feature in the issue tracker of this repository. To support the work, use [GitHub Sponsors](https://github.com/sponsors/theluckystrike?metadata_source=hr-fold-stop).
+Report a bug or ask for a feature in the issue tracker of this repository. To support the work, use [GitHub Sponsors](https://github.com/sponsors/theluckystrike?frequency=one-time&metadata_source=hr-fold-stop).
 
 ## License
 
