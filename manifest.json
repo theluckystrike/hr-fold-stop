@@ -1,9 +1,9 @@
 {
 	"id": "hr-fold-stop",
 	"name": "Fold Stop",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"minAppVersion": "1.13.4",
-	"description": "Stop heading folds at horizontal rules so the next section stays visible.",
+	"description": "Stop heading folds at a horizontal rule, so the next section stays visible. Fold headings in Live Preview and Source mode without hiding the sections after the rule.",
 	"author": "Michael Lip",
 	"authorUrl": "https://github.com/theluckystrike",
 	"fundingUrl": "https://github.com/sponsors/theluckystrike",

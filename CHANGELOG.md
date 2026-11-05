@@ -1,5 +1,11 @@
 # hr-fold-stop
 
+## 1.2.3
+
+### Patch Changes
+
+- The Pro notice of Fold Stop now says that one payment turns on Pro in every NoteMods plugin.
+
 ## 1.2.2
 
 ### Patch Changes

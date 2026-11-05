@@ -12,7 +12,7 @@ interface TestPlugin {
 
 const FOLDERS_LEAD = 'Folder rules that turn Fold Stop on or off for each folder need Pro.';
 const OVERRIDE_LEAD = 'A note property that overrides the folder and vault rules needs Pro.';
-const PITCH = 'Sponsor on GitHub, then sign in from the plugin settings.';
+const PITCH = 'One payment turns on Pro in every NoteMods plugin. Sponsor on GitHub, then sign in from the plugin settings.';
 
 /** Marks the Add folder button and the override property input of the open settings tab, so that the test can find them again. Returns true when both exist. */
 const markControls = () => browser.executeObsidian(({ app }) => {
